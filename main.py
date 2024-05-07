@@ -1,3 +1,4 @@
+import random
 import sys
 
 from PyQt5 import uic
@@ -27,8 +28,11 @@ class MainWin(QMainWindow):
 
         for row in range(self.tableWidget.rowCount() + 1):
             for column in range(self.tableWidget.columnCount() + 1):
-                if self.tableWidget.cellWidget(row, column) != QSpinBox:
+                if type(self.tableWidget.cellWidget(row, column)) != QSpinBox and not (
+                        row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1
+                ):
                     spin_box = QSpinBox(self)
+                    spin_box.setValue(random.randint(0, 30))
                     self.tableWidget.setCellWidget(row, column, spin_box)
 
         self.tableWidget.setHorizontalHeaderLabels(suppliers_headers + ['Запасы'])
