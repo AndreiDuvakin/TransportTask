@@ -2,7 +2,7 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSpinBox
 
 
 class MainWin(QMainWindow):
@@ -24,6 +24,12 @@ class MainWin(QMainWindow):
         shop_headers = []
         for supplier in range(1, self.spinBox_3.value() + 1):
             shop_headers.append(f'Магазин {str(supplier)}')
+
+        for row in range(self.tableWidget.rowCount() + 1):
+            for column in range(self.tableWidget.columnCount() + 1):
+                if self.tableWidget.cellWidget(row, column) != QSpinBox:
+                    spin_box = QSpinBox(self)
+                    self.tableWidget.setCellWidget(row, column, spin_box)
 
         self.tableWidget.setHorizontalHeaderLabels(suppliers_headers + ['Запасы'])
         self.tableWidget.setVerticalHeaderLabels(shop_headers + ['Потребности'])
