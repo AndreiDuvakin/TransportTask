@@ -1,53 +1,56 @@
 import random
 import sys
-from pprint import pprint
 
 from PyQt5 import uic
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QApplication, QMainWindow, QSpinBox, QLabel, QWidget, QSizePolicy
+
+from src.delta import delta_method
 
 
 class MainWin(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('ui/MainWin.ui', self)
-        self.spinBox.valueChanged.connect(self.update_table)
-        self.spinBox_3.valueChanged.connect(self.update_table)
+        self.shop_counter.valueChanged.connect(self.update_table)
+        self.suppliers_counter.valueChanged.connect(self.update_table)
         self.pushButton.clicked.connect(self.lest_math)
         QTimer.singleShot(100, self.update_table)
 
     def lest_math(self):
         cost_matrix = []
-        for row in range(self.spinBox_3.value()):
+        for row in range(self.suppliers_counter.value()):
             row_data = []
-            for column in range(self.spinBox.value()):
+            for column in range(self.shop_counter.value()):
                 spin_box = self.tableWidget.cellWidget(row, column)
                 row_data.append(spin_box.value())
             cost_matrix.append(row_data)
 
         supply = []
-        for row in range(self.spinBox.value()):
-            spin_box = self.tableWidget.cellWidget(row, self.spinBox.value())
-            if type(spin_box) is QSpinBox:
+        for row in range(self.suppliers_counter.value()):
+            spin_box = self.tableWidget.cellWidget(row, self.shop_counter.value())
+            if type(spin_box) is SpinWidget:
                 supply.append(spin_box.value())
 
         demand = []
-        for column in range(self.spinBox_3.value()):
-            spin_box = self.tableWidget.cellWidget(self.spinBox_3.value(), column)
-            if type(spin_box) is QSpinBox:
+        for column in range(self.shop_counter.value()):
+            spin_box = self.tableWidget.cellWidget(self.suppliers_counter.value(), column)
+            if type(spin_box) is SpinWidget:
                 demand.append(spin_box.value())
 
+        delta_method(cost_matrix, supply, demand)
+
     def update_table(self):
-        self.tableWidget.setColumnCount(self.spinBox.value() + 1)
-        self.tableWidget.setRowCount(self.spinBox_3.value() + 1)
+        self.tableWidget.setColumnCount(self.shop_counter.value() + 1)
+        self.tableWidget.setRowCount(self.suppliers_counter.value() + 1)
 
         suppliers_headers = []
-        for supplier in range(1, self.spinBox.value() + 1):
-            suppliers_headers.append(f'Поставщик {str(supplier)}')
+        for supplier in range(1, self.shop_counter.value() + 1):
+            suppliers_headers.append(f'Магазин {str(supplier)}')
 
         shop_headers = []
-        for supplier in range(1, self.spinBox_3.value() + 1):
-            shop_headers.append(f'Магазин {str(supplier)}')
+        for supplier in range(1, self.suppliers_counter.value() + 1):
+            shop_headers.append(f'Поставщик {str(supplier)}')
 
         for row in range(self.tableWidget.rowCount() + 1):
             for column in range(self.tableWidget.columnCount() + 1):
@@ -71,8 +74,8 @@ class MainWin(QMainWindow):
         self.resize_cell_table()
 
     def resize_cell_table(self):
-        width = max(150, (self.tableWidget.width() - 150) // (self.spinBox.value() + 1))
-        height = max(50, (self.tableWidget.height() - 30) // (self.spinBox_3.value() + 1))
+        width = max(150, (self.tableWidget.width() - 150) // (self.shop_counter.value() + 1))
+        height = max(50, (self.tableWidget.height() - 30) // (self.suppliers_counter.value() + 1))
 
         for row in range(self.tableWidget.rowCount()):
             self.tableWidget.setRowHeight(row, height)
@@ -86,10 +89,10 @@ class SpinWidget(QWidget):
         super().__init__()
         uic.loadUi('ui/SpinWidget.ui', self)
 
-    def setValue(self, value: int):
+    def setValue(self, value: int) -> None:
         self.spinBox.setValue(value)
 
-    def value(self):
+    def value(self) -> int:
         return self.spinBox.value()
 
 
