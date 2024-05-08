@@ -4,7 +4,7 @@ from src.find_cheapest import find_cheapest
 from src.find_only_zero_items import find_only_zero_items
 from src.matrix_dilution import matrix_dilution
 from src.paired_transformation import paired_transformation
-from src.transferring_element_to_transportation_plan import transferring_element_to_transportation_plan
+from src.transferring_element_to_transportation_plan import TransferringElementToPlan
 
 
 def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[int]):
@@ -22,28 +22,24 @@ def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[
     shops_copy = copy_int_vector(shops)
     cost_matrix_copy = copy_int_matrix(cost_matrix)
 
-    sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = (
-        transferring_element_to_transportation_plan(
-            sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, zero_cors
-        )
+    plan = TransferringElementToPlan(
+        sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, zero_cors
     )
+    sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = plan.calculate()
 
     cheapest_cors = find_cheapest(cost_matrix_copy)
-
-    sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = (
-        transferring_element_to_transportation_plan(
-            sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, cheapest_cors
-        )
+    plan = TransferringElementToPlan(
+        sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, cheapest_cors
     )
+    sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = plan.calculate()
 
     zero_cors = find_only_zero_items(sparse_matrix, cost_matrix_copy)
-
     while zero_cors and storages_copy and shops_copy:
-        sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = (
-            transferring_element_to_transportation_plan(
-                sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, zero_cors
-            )
+        plan = TransferringElementToPlan(
+            sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, zero_cors
         )
+
+        sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = plan.calculate()
 
         if sparse_matrix:
             zero_cors = find_only_zero_items(sparse_matrix, cost_matrix_copy)

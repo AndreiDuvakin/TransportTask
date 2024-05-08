@@ -5,7 +5,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QSpinBox, QLabel, QWidget, QSizePolicy, QTableWidget, QMessageBox
 
-from src.delta import delta_method
+from src.delta_method import delta_method
 
 MATRIX = [
     [6, 5, 8, 7, 14],

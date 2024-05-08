@@ -1,39 +1,62 @@
 from src.delete_line_from_matrix import delete_column_from_matrix, delete_row_from_matrix
 
+FIRST_INDEX = 0
+SECOND_INDEX = 1
 
-def transferring_element_to_transportation_plan(sparse_matrix: list[list[int]], cost_matrix: list[list[int]],
-                                                transportation_plan: list[list[int]],
-                                                storages: list[int], shops: list[int], item_cors: list[int]) -> (
-        list[list[int]], list[list[int]], list[list[int]], list[int], list[int]
-):
-    storages_item = storages[item_cors[0]]
-    shops_item = shops[item_cors[1]]
 
-    if shops_item > storages_item:
-        transportation_plan[item_cors[0]][item_cors[1]] = storages_item
-        shops[item_cors[1]] -= storages_item
-        del storages[item_cors[0]]
+class TransferringElementToPlan:
+    def __init__(
+            self, sparse_matrix: list[list[int]],
+            cost_matrix: list[list[int]],
+            transportation_plan: list[list[int]],
+            storages: list[int],
+            shops: list[int],
+            item_cors: list[int]
+    ):
+        self.sparse_matrix = sparse_matrix
+        self.cost_matrix = cost_matrix
+        self.transportation_plan = transportation_plan
+        self.storages = storages
+        self.shops = shops
+        self.item_cors = item_cors
+        self.storages_item = storages[item_cors[FIRST_INDEX]]
+        self.shops_item = shops[item_cors[SECOND_INDEX]]
 
-        sparse_matrix = delete_row_from_matrix(sparse_matrix, item_cors[0])
-        cost_matrix = delete_row_from_matrix(cost_matrix, item_cors[0])
+    def calculate(self):
+        self.comparing_items()
+        return self.sparse_matrix, self.cost_matrix, self.transportation_plan, self.storages, self.shops
 
-    elif shops_item == storages_item:
-        transportation_plan[item_cors[0]][item_cors[1]] = storages_item
-        del storages[item_cors[0]]
-        del shops[item_cors[1]]
+    def comparing_items(self):
+        if self.shops_item > self.storages_item:
+            self.transfer_storage_to_plan()
+        elif self.shops_item == self.storages_item:
+            self.transfer_shop_and_storage_to_plan()
+        else:
+            self.transfer_shop_to_plan()
 
-        sparse_matrix = delete_column_from_matrix(sparse_matrix, item_cors[0])
-        sparse_matrix = delete_row_from_matrix(sparse_matrix, item_cors[1])
+    def transfer_storage_to_plan(self):
+        self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.storages_item
+        self.shops[self.item_cors[SECOND_INDEX]] -= self.storages_item
+        del self.storages[self.item_cors[FIRST_INDEX]]
 
-        cost_matrix = delete_column_from_matrix(cost_matrix, item_cors[0])
-        cost_matrix = delete_row_from_matrix(cost_matrix, item_cors[1])
+        self.sparse_matrix = delete_row_from_matrix(self.sparse_matrix, self.item_cors[FIRST_INDEX])
+        self.cost_matrix = delete_row_from_matrix(self.cost_matrix, self.item_cors[FIRST_INDEX])
 
-    else:
-        transportation_plan[item_cors[0]][item_cors[1]] = shops_item
-        del shops[item_cors[1]]
-        storages[item_cors[0]] -= shops_item
+    def transfer_shop_and_storage_to_plan(self):
+        self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.storages_item
+        del self.storages[self.item_cors[FIRST_INDEX]]
+        del self.shops[self.item_cors[SECOND_INDEX]]
 
-        sparse_matrix = delete_column_from_matrix(sparse_matrix, item_cors[1])
-        cost_matrix = delete_column_from_matrix(cost_matrix, item_cors[1])
+        self.sparse_matrix = delete_column_from_matrix(self.sparse_matrix, self.item_cors[FIRST_INDEX])
+        self.sparse_matrix = delete_row_from_matrix(self.sparse_matrix, self.item_cors[SECOND_INDEX])
 
-    return sparse_matrix, cost_matrix, transportation_plan, storages, shops
+        self.cost_matrix = delete_column_from_matrix(self.cost_matrix, self.item_cors[FIRST_INDEX])
+        self.cost_matrix = delete_row_from_matrix(self.cost_matrix, self.item_cors[SECOND_INDEX])
+
+    def transfer_shop_to_plan(self):
+        self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.shops_item
+        del self.shops[self.item_cors[SECOND_INDEX]]
+        self.storages[self.item_cors[FIRST_INDEX]] -= self.shops_item
+
+        self.sparse_matrix = delete_column_from_matrix(self.sparse_matrix, self.item_cors[SECOND_INDEX])
+        self.cost_matrix = delete_column_from_matrix(self.cost_matrix, self.item_cors[SECOND_INDEX])

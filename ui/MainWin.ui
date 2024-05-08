@@ -35,7 +35,7 @@
        <item row="2" column="1">
         <widget class="QSpinBox" name="shop_counter">
          <property name="minimum">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="singleStep">
           <number>1</number>
@@ -48,7 +48,7 @@
        <item row="2" column="2">
         <widget class="QSpinBox" name="suppliers_counter">
          <property name="minimum">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="singleStep">
           <number>1</number>
