@@ -25,28 +25,20 @@ def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[
     plan = TransferringElementToPlan(
         sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, zero_cors
     )
-    sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = plan.calculate()
+    plan.calculate()
 
-    cheapest_cors = find_cheapest(cost_matrix_copy)
-    plan = TransferringElementToPlan(
-        sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, cheapest_cors
-    )
-    sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = plan.calculate()
+    cheapest_cors = find_cheapest(plan.cost_matrix)
+    plan.set_new_item_cors(cheapest_cors)
+    plan.calculate()
 
-    zero_cors = find_only_zero_items(sparse_matrix, cost_matrix_copy)
-    while zero_cors and storages_copy and shops_copy:
-        plan = TransferringElementToPlan(
-            sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, zero_cors
-        )
-
-        sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy = plan.calculate()
-
-        if sparse_matrix:
-            zero_cors = find_only_zero_items(sparse_matrix, cost_matrix_copy)
+    while zero_cors and plan.storages and plan.shops and plan.sparse_matrix:
+        zero_cors = find_only_zero_items(plan.sparse_matrix, plan.cost_matrix)
+        plan.set_new_item_cors(zero_cors)
+        plan.calculate()
 
     result_summ = sum(
-        [transportation_plan[row_index][column_index] * cost_matrix[row_index][column_index] for row_index in
-         range(len(transportation_plan)) for column_index in range(len(transportation_plan[row_index]))]
+        [plan.transportation_plan[row_index][column_index] * cost_matrix[row_index][column_index] for row_index in
+         range(len(plan.transportation_plan)) for column_index in range(len(plan.transportation_plan[row_index]))]
     )
 
-    return transportation_plan, result_summ
+    return plan.transportation_plan, result_summ

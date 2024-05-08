@@ -22,9 +22,13 @@ class TransferringElementToPlan:
         self.storages_item = storages[item_cors[FIRST_INDEX]]
         self.shops_item = shops[item_cors[SECOND_INDEX]]
 
+    def set_new_item_cors(self, item_cors: list[int]):
+        self.item_cors = item_cors
+        self.storages_item = self.storages[item_cors[FIRST_INDEX]]
+        self.shops_item = self.shops[item_cors[SECOND_INDEX]]
+
     def calculate(self):
         self.comparing_items()
-        return self.sparse_matrix, self.cost_matrix, self.transportation_plan, self.storages, self.shops
 
     def comparing_items(self):
         if self.shops_item > self.storages_item:
