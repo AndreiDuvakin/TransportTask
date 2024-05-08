@@ -9,7 +9,6 @@ from src.transferring_element_to_transportation_plan import TransferringElementT
 
 def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[int]):
     sparse_matrix = matrix_dilution(cost_matrix)
-
     zero_cors = find_only_zero_items(sparse_matrix, cost_matrix)
 
     while not zero_cors:
@@ -37,8 +36,10 @@ def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[
         plan.calculate()
 
     result_summ = sum(
-        [plan.transportation_plan[row_index][column_index] * cost_matrix[row_index][column_index] for row_index in
-         range(len(plan.transportation_plan)) for column_index in range(len(plan.transportation_plan[row_index]))]
+        [
+            plan.transportation_plan[row_index][column_index] * cost_matrix[row_index][column_index] for row_index in
+            range(len(plan.transportation_plan)) for column_index in range(len(plan.transportation_plan[row_index]))
+        ]
     )
 
     return plan.transportation_plan, result_summ

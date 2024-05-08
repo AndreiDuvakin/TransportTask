@@ -18,13 +18,16 @@ MATRIX = [
 class MainWin(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.shops = None
+        self.storages = None
+        self.cost_matrix = None
         uic.loadUi('ui/MainWin.ui', self)
         self.shop_counter.valueChanged.connect(self.update_table)
         self.suppliers_counter.valueChanged.connect(self.update_table)
-        self.pushButton.clicked.connect(self.lest_math)
+        self.pushButton.clicked.connect(self.extract_data)
         QTimer.singleShot(100, self.update_table)
 
-    def lest_math(self):
+    def extract_cost_matrix(self):
         cost_matrix = []
         for row in range(self.suppliers_counter.value()):
             row_data = []
@@ -32,7 +35,9 @@ class MainWin(QMainWindow):
                 spin_box = self.tableWidget.cellWidget(row, column)
                 row_data.append(spin_box.value())
             cost_matrix.append(row_data)
+        return cost_matrix
 
+    def extract_storages(self):
         storages = []
         for row in range(self.suppliers_counter.value()):
             spin_box = self.tableWidget.cellWidget(row, self.shop_counter.value())
@@ -42,32 +47,46 @@ class MainWin(QMainWindow):
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
                 label.setText(str(spin_box.value()))
                 self.tableWidget_2.setCellWidget(row, self.suppliers_counter.value() + 1, label)
+        return storages
 
-        shop = []
+    def extract_shops(self):
+        shops = []
         for column in range(self.shop_counter.value()):
             spin_box = self.tableWidget.cellWidget(self.suppliers_counter.value(), column)
             if type(spin_box) is SpinWidget:
-                shop.append(spin_box.value())
+                shops.append(spin_box.value())
                 label = QLabel()
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
                 label.setText(str(spin_box.value()))
                 self.tableWidget_2.setCellWidget(self.suppliers_counter.value(), column, label)
+        return shops
 
+    def extract_data(self):
+        self.cost_matrix = self.extract_cost_matrix()
+        self.storages = self.extract_storages()
+        self.shops = self.extract_shops()
+        self.calculate()
+
+    def calculate(self):
         try:
-            transportation_plan, result_sum = delta_method(cost_matrix, storages, shop)
-            label = QLabel()
-            label.setText(str(result_sum))
-            self.tableWidget_2.setCellWidget(self.suppliers_counter.value() + 1, 0, label)
-
-            for row_index in range(len(transportation_plan)):
-                for column_index in range(len(transportation_plan[row_index])):
-                    label = QLabel()
-                    value = transportation_plan[row_index][column_index]
-                    label.setText(str(value) if value != 0 else '')
-                    label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-                    self.tableWidget_2.setCellWidget(row_index, column_index, label)
+            transportation_plan, result_sum = delta_method(self.cost_matrix, self.storages, self.shops)
+            self.output_results(transportation_plan, result_sum)
         except RecursionError:
-            QMessageBox.warning(self, 'Решений нет', 'Предоставленный набор данных не имеет решений дельта-методом')
+            QMessageBox.warning(self, 'Решений нет',
+                                'Предоставленный набор данных не имеет решений дельта-методом')
+
+    def output_results(self, transportation_plan, result_sum):
+        label = QLabel()
+        label.setText(str(result_sum))
+        self.tableWidget_2.setCellWidget(self.suppliers_counter.value() + 1, 0, label)
+
+        for row_index in range(len(transportation_plan)):
+            for column_index in range(len(transportation_plan[row_index])):
+                label = QLabel()
+                value = transportation_plan[row_index][column_index]
+                label.setText(str(value) if value != 0 else '')
+                label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+                self.tableWidget_2.setCellWidget(row_index, column_index, label)
 
     def update_table(self):
         self.tableWidget_2.setColumnCount(0)
