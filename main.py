@@ -70,6 +70,9 @@ class MainWin(QMainWindow):
             QMessageBox.warning(self, 'Решений нет', 'Предоставленный набор данных не имеет решений дельта-методом')
 
     def update_table(self):
+        self.tableWidget_2.setColumnCount(0)
+        self.tableWidget_2.setRowCount(0)
+
         self.tableWidget.setColumnCount(self.shop_counter.value() + 1)
         self.tableWidget.setRowCount(self.suppliers_counter.value() + 1)
 
@@ -92,7 +95,7 @@ class MainWin(QMainWindow):
                     spin_box = SpinWidget()
                     spin_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
                     spin_box.setValue(random.randint(1, 30))
-                    # spin_box.setValue(MATRIX[row][column])
+                    spin_box.setValue(MATRIX[row][column])
                     self.tableWidget.setCellWidget(row, column, spin_box)
                 elif row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1:
                     label = QLabel(self)
