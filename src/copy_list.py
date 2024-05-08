@@ -6,4 +6,4 @@ def copy_int_vector(vector: list[int]) -> list[int]:
 
 
 def copy_int_matrix(matrix: list[list[int]]) -> list[list[int]]:
-    return deepcopy(matrix)
+    return [row[:] for row in matrix]
