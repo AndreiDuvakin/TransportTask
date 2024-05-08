@@ -15,7 +15,6 @@ def paired_transformation(zero_cors: list[int], sparse_matrix: list[list[int]], 
         return resp_sparse_matrix
 
     if delta > 0:
-        print(delta)
         resp_sparse_matrix = paired_transformation(zero_cors, resp_sparse_matrix, cost_matrix, storages, shops)
         return resp_sparse_matrix
 

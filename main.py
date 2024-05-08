@@ -3,7 +3,7 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QSpinBox, QLabel, QWidget, QSizePolicy, QTableWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSpinBox, QLabel, QWidget, QSizePolicy, QTableWidget, QMessageBox
 
 from src.delta import delta_method
 
@@ -53,18 +53,21 @@ class MainWin(QMainWindow):
                 label.setText(str(spin_box.value()))
                 self.tableWidget_2.setCellWidget(self.suppliers_counter.value(), column, label)
 
-        transportation_plan, result_sum = delta_method(cost_matrix, storages, shop)
-        label = QLabel()
-        label.setText(str(result_sum))
-        self.tableWidget_2.setCellWidget(self.suppliers_counter.value() + 1, 0, label)
+        try:
+            transportation_plan, result_sum = delta_method(cost_matrix, storages, shop)
+            label = QLabel()
+            label.setText(str(result_sum))
+            self.tableWidget_2.setCellWidget(self.suppliers_counter.value() + 1, 0, label)
 
-        for row_index in range(len(transportation_plan)):
-            for column_index in range(len(transportation_plan[row_index])):
-                label = QLabel()
-                value = transportation_plan[row_index][column_index]
-                label.setText(str(value) if value != 0 else '')
-                label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-                self.tableWidget_2.setCellWidget(row_index, column_index, label)
+            for row_index in range(len(transportation_plan)):
+                for column_index in range(len(transportation_plan[row_index])):
+                    label = QLabel()
+                    value = transportation_plan[row_index][column_index]
+                    label.setText(str(value) if value != 0 else '')
+                    label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+                    self.tableWidget_2.setCellWidget(row_index, column_index, label)
+        except RecursionError:
+            QMessageBox.warning(self, 'Решений нет', 'Предоставленный набор данных не имеет решений дельта-методом')
 
     def update_table(self):
         self.tableWidget.setColumnCount(self.shop_counter.value() + 1)
