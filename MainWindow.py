@@ -5,7 +5,7 @@ from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QMainWindow, QSpinBox, QLabel, QSizePolicy, QMessageBox
 
 from SpinWidget import SpinWidget
-from src.delta_method import delta_method
+from ThreadDeltaCalculate import ThreadDeltaCalculate
 
 MATRIX = [
     [6, 5, 8, 7, 14],
@@ -18,6 +18,7 @@ MATRIX = [
 class MainWin(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.worker = None
         self.shops = None
         self.storages = None
         self.cost_matrix = None
@@ -69,13 +70,15 @@ class MainWin(QMainWindow):
 
     def calculate(self):
         try:
-            transportation_plan, result_sum = delta_method(self.cost_matrix, self.storages, self.shops)
-            self.output_results(transportation_plan, result_sum)
+            self.worker = ThreadDeltaCalculate(self.cost_matrix, self.storages, self.shops)
+            self.worker.finished.connect(self.output_results)
+            self.worker.start()
         except RecursionError:
             QMessageBox.warning(self, 'Решений нет',
                                 'Предоставленный набор данных не имеет решений дельта-методом')
 
-    def output_results(self, transportation_plan, result_sum):
+    def output_results(self, calculate_result):
+        transportation_plan, result_sum = calculate_result
         label = QLabel()
         label.setText(str(result_sum))
         self.tableWidget_2.setCellWidget(self.suppliers_counter.value() + 1, 0, label)
