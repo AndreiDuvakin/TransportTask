@@ -7,6 +7,13 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QSpinBox, QLabel, QWidget
 
 from src.delta import delta_method
 
+MATRIX = [
+    [6, 5, 8, 7, 14],
+    [3, 6, 4, 2, 12],
+    [9, 1, 3, 6, 8],
+    [10, 14, 6, 4]
+]
+
 
 class MainWin(QMainWindow):
     def __init__(self):
@@ -52,14 +59,15 @@ class MainWin(QMainWindow):
         for supplier in range(1, self.suppliers_counter.value() + 1):
             shop_headers.append(f'Поставщик {str(supplier)}')
 
-        for row in range(self.tableWidget.rowCount() + 1):
-            for column in range(self.tableWidget.columnCount() + 1):
+        for row in range(self.tableWidget.rowCount()):
+            for column in range(self.tableWidget.columnCount()):
                 if type(self.tableWidget.cellWidget(row, column)) != QSpinBox and not (
                         row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1
                 ):
                     spin_box = SpinWidget()
                     spin_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
                     spin_box.setValue(random.randint(1, 30))
+                    spin_box.setValue(MATRIX[row][column])
                     self.tableWidget.setCellWidget(row, column, spin_box)
                 elif row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1:
                     label = QLabel(self)
