@@ -10,6 +10,9 @@ def find_only_zero_items(sparse_matrix: list[list[int]], cost_matrix: list[list[
         if column.count(0) == 1:
             zero_items_cors.append([column.index(0), column_index])
 
+    if not zero_items_cors:
+        return []
+
     response_zero_item = zero_items_cors[0]
 
     for zero_item in zero_items_cors:

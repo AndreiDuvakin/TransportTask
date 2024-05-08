@@ -44,6 +44,7 @@ def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[
                 sparse_matrix, cost_matrix_copy, transportation_plan, storages_copy, shops_copy, zero_cors
             )
         )
+
         if sparse_matrix:
             zero_cors = find_only_zero_items(sparse_matrix, cost_matrix_copy)
 
