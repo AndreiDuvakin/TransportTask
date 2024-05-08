@@ -47,20 +47,9 @@ def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[
         if sparse_matrix:
             zero_cors = find_only_zero_items(sparse_matrix, cost_matrix_copy)
 
-    for i in sparse_matrix:
-        for j in i:
-            print(j, end=' ')
-        print()
-    print()
+    result_summ = sum(
+        [transportation_plan[row_index][column_index] * cost_matrix[row_index][column_index] for row_index in
+         range(len(transportation_plan)) for column_index in range(len(transportation_plan[row_index]))]
+    )
 
-    for i in cost_matrix_copy:
-        for j in i:
-            print(j, end=' ')
-        print()
-    print()
-
-    for i in transportation_plan:
-        for j in i:
-            print(j, end=' ')
-        print()
-    print()
+    return transportation_plan, result_summ

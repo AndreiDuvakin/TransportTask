@@ -2,7 +2,7 @@ import random
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QSpinBox, QLabel, QWidget, QSizePolicy
 
 from src.delta import delta_method
@@ -33,23 +33,40 @@ class MainWin(QMainWindow):
                 row_data.append(spin_box.value())
             cost_matrix.append(row_data)
 
-        supply = []
+        storages = []
         for row in range(self.suppliers_counter.value()):
             spin_box = self.tableWidget.cellWidget(row, self.shop_counter.value())
             if type(spin_box) is SpinWidget:
-                supply.append(spin_box.value())
+                storages.append(spin_box.value())
+                label = QLabel()
+                label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+                label.setText(str(spin_box.value()))
+                self.tableWidget_2.setCellWidget(row, self.suppliers_counter.value() + 1, label)
 
-        demand = []
+        shop = []
         for column in range(self.shop_counter.value()):
             spin_box = self.tableWidget.cellWidget(self.suppliers_counter.value(), column)
             if type(spin_box) is SpinWidget:
-                demand.append(spin_box.value())
+                shop.append(spin_box.value())
+                label = QLabel()
+                label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+                label.setText(str(spin_box.value()))
+                self.tableWidget_2.setCellWidget(self.suppliers_counter.value(), column, label)
 
-        delta_method(cost_matrix, supply, demand)
+        transportation_plan, result_sum = delta_method(cost_matrix, storages, shop)
+        label = QLabel()
+        label.setText(str(result_sum))
+        label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+        self.tableWidget_2.setCellWidget(self.suppliers_counter.value(), column, label)
+
+
 
     def update_table(self):
         self.tableWidget.setColumnCount(self.shop_counter.value() + 1)
         self.tableWidget.setRowCount(self.suppliers_counter.value() + 1)
+
+        self.tableWidget_2.setColumnCount(self.shop_counter.value() + 1)
+        self.tableWidget_2.setRowCount(self.suppliers_counter.value() + 2)
 
         suppliers_headers = []
         for supplier in range(1, self.shop_counter.value() + 1):
@@ -76,6 +93,9 @@ class MainWin(QMainWindow):
         self.tableWidget.setHorizontalHeaderLabels(suppliers_headers + ['Запасы'])
         self.tableWidget.setVerticalHeaderLabels(shop_headers + ['Потребности'])
 
+        self.tableWidget_2.setHorizontalHeaderLabels(suppliers_headers + ['Запасы'])
+        self.tableWidget_2.setVerticalHeaderLabels(shop_headers + ['Потребности', 'Итог'])
+
         self.resize_cell_table()
 
     def resizeEvent(self, a0, QResizeEvent=None):
@@ -87,9 +107,16 @@ class MainWin(QMainWindow):
 
         for row in range(self.tableWidget.rowCount()):
             self.tableWidget.setRowHeight(row, height)
+            self.tableWidget_2.setRowHeight(row, height)
+
+        height = max(60, (self.tableWidget.height() - 10) // (self.suppliers_counter.value() + 1))
+        self.tableWidget_2.setRowHeight(self.tableWidget.rowCount(), height)
+        self.tableWidget_2.setSpan(self.tableWidget.rowCount(), 0, self.tableWidget.rowCount(),
+                                   self.tableWidget.columnCount())
 
         for column in range(self.tableWidget.columnCount()):
             self.tableWidget.setColumnWidth(column, width)
+            self.tableWidget_2.setColumnWidth(column, width)
 
 
 class SpinWidget(QWidget):

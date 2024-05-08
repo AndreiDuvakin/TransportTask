@@ -113,7 +113,7 @@
        </font>
       </property>
       <property name="title">
-       <string>Результат</string>
+       <string>Оптимальный план перевозок</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
