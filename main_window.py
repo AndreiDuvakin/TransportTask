@@ -2,10 +2,10 @@ import random
 
 from PyQt5 import uic
 from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtWidgets import QMainWindow, QSpinBox, QLabel, QSizePolicy, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QSpinBox, QLabel, QSizePolicy, QMessageBox, QDesktopWidget
 
-from SpinWidget import SpinWidget
-from ThreadDeltaCalculate import ThreadDeltaCalculate
+from spin_widget import SpinWidget
+from thread_delta_calculate import ThreadDeltaCalculate
 
 MATRIX = [
     [6, 5, 8, 7, 14],
@@ -26,7 +26,12 @@ class MainWin(QMainWindow):
         self.shop_counter.valueChanged.connect(self.update_table)
         self.suppliers_counter.valueChanged.connect(self.update_table)
         self.pushButton.clicked.connect(self.extract_data)
-        QTimer.singleShot(100, self.update_table)
+        self.center_on_screen()
+        QTimer.singleShot(3400, self.update_table)
+
+    def center_on_screen(self):
+        screen = QDesktopWidget().availableGeometry()
+        self.move((screen.width() - self.width()) // 2, (screen.height() - self.height()) // 2)
 
     def extract_cost_matrix(self):
         cost_matrix = []
