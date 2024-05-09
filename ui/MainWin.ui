@@ -23,50 +23,6 @@
    <iconset>
     <normaloff>../img/logo.png</normaloff>../img/logo.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QMainWindow {
-            background-color: #060429;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #eaeaea;
-}
-
-QPushButton {
-            background-color: #060429;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #eaeaea;
-			 border: 2px solid #eaeaea;
-			 border-radius: 6px;
-}
-
-QLabel {
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #eaeaea;
-}
-
-&lt;!---
-QSpinBox {
-            color: #060429;
-            font: 14pt &quot;Ubuntu&quot;;
-            background-color: white;
-            border: 2px solid #060429;
-            border-radius: 5px;
-        }
-
-        QPushButton {
-            color: white;
-            font: 14pt &quot;Ubuntu&quot;;
-            background-color: #060429;
-            border: 2px solid white;
-            border-radius: 5px;
-        }
-
-        QTableWidget {
-            background-color: #060429;
-            color: white;
-            font: 14pt &quot;Ubuntu&quot;;
-        }
---!&gt;</string>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="2">
@@ -95,33 +51,7 @@ QSpinBox {
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tableWidget_2">
-         <property name="styleSheet">
-          <string notr="true">QWidget {
-            background-color: #eaeaea;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #060429;
-}
-
-QTableWidget {
-                    background-color: #060429;	
-                    font: 1000 14pt &quot;Ubuntu&quot;;
-                    color: #8b8b8b;
-				    gridline-color: #8b8b8b;
-}
-
-QTableWidget:item {
-    background: #060429;
-}
-
-QHeaderView {
-                    background-color: #060429;	
-                    font: 1000 14pt &quot;Ubuntu&quot;;
-                    color: #b4b4b4;
-}
-</string>
-         </property>
-        </widget>
+        <widget class="QTableWidget" name="tableWidget_2"/>
        </item>
       </layout>
      </widget>
@@ -185,13 +115,6 @@ QHeaderView {
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="2" column="1">
         <widget class="QSpinBox" name="shop_counter">
-         <property name="styleSheet">
-          <string notr="true">QWidget {
-            background-color: #eaeaea;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #060429;
-}</string>
-         </property>
          <property name="minimum">
           <number>2</number>
          </property>
@@ -205,13 +128,6 @@ QHeaderView {
        </item>
        <item row="2" column="2">
         <widget class="QSpinBox" name="suppliers_counter">
-         <property name="styleSheet">
-          <string notr="true">QWidget {
-            background-color: #eaeaea;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #060429;
-}</string>
-         </property>
          <property name="minimum">
           <number>2</number>
          </property>
@@ -238,33 +154,7 @@ QHeaderView {
         </widget>
        </item>
        <item row="0" column="0" colspan="5">
-        <widget class="QTableWidget" name="tableWidget">
-         <property name="styleSheet">
-          <string notr="true">QWidget {
-            background-color: #eaeaea;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #060429;
-}
-
-QTableWidget {
-                    background-color: #060429;	
-                    font: 1000 14pt &quot;Ubuntu&quot;;
-                    color: #eaeaea;
-				    gridline-color: #8b8b8b;
-}
-
-QTableWidget:item {
-    background: #060429;
-}
-
-QHeaderView {
-                    background-color: #060429;	
-                    font: 1000 14pt &quot;Ubuntu&quot;;
-                    color: #eaeaea;
-}
-</string>
-         </property>
-        </widget>
+        <widget class="QTableWidget" name="tableWidget"/>
        </item>
        <item row="1" column="4" rowspan="2">
         <spacer name="horizontalSpacer_2">

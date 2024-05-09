@@ -50,13 +50,6 @@ class MainWin(QMainWindow):
             if type(spin_box) is SpinWidget:
                 storages.append(spin_box.value())
                 label = QLabel()
-                label.setStyleSheet("""
-                QLabel {
-                    background-color: #060429;	
-                    font: 1000 14pt "Ubuntu";
-                    color: #eaeaea;
-                }
-                """)
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
                 label.setText(str(spin_box.value()))
                 self.tableWidget_2.setCellWidget(row, self.shop_counter.value(), label)
@@ -69,13 +62,6 @@ class MainWin(QMainWindow):
             if type(spin_box) is SpinWidget:
                 shops.append(spin_box.value())
                 label = QLabel()
-                label.setStyleSheet("""
-                QLabel {
-                    background-color: #060429;	
-                    font: 1000 14pt "Ubuntu";
-                    color: #eaeaea;
-                }
-                """)
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
                 label.setText(str(spin_box.value()))
                 self.tableWidget_2.setCellWidget(self.suppliers_counter.value(), column, label)
@@ -100,26 +86,12 @@ class MainWin(QMainWindow):
 
         transportation_plan, result_sum = calculate_result
         label = QLabel()
-        label.setStyleSheet("""
-        QLabel {
-            background-color: #060429;	
-            font: 1000 14pt "Ubuntu";
-            color: #eaeaea;
-        }
-        """)
         label.setText(str(result_sum))
         self.tableWidget_2.setCellWidget(self.suppliers_counter.value() + 1, 0, label)
 
         for row_index in range(len(transportation_plan)):
             for column_index in range(len(transportation_plan[row_index])):
                 label = QLabel()
-                label.setStyleSheet("""
-                QLabel {
-                    background-color: #060429;	
-                    font: 1000 14pt "Ubuntu";
-                    color: #eaeaea;
-                }
-                """)
                 value = transportation_plan[row_index][column_index]
                 label.setText(str(value) if value != 0 else '')
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
@@ -155,13 +127,6 @@ class MainWin(QMainWindow):
                     self.tableWidget.setCellWidget(row, column, spin_box)
                 elif row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1:
                     label = QLabel(self)
-                    label.setStyleSheet("""
-                    QLabel {
-                        background-color: #060429;	
-                        font: 1000 14pt "Ubuntu";
-                        color: #eaeaea;
-                    }
-                    """)
                     self.tableWidget.setCellWidget(row, column, label)
 
         self.tableWidget.setHorizontalHeaderLabels(suppliers_headers + ['Запасы'])
