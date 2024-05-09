@@ -1,7 +1,7 @@
 from src.copy_list import copy_int_vector, copy_int_matrix
 from src.create_zero_list import create_zero_matrix
 from src.find_cheapest import find_cheapest
-from src.find_only_zero_items import find_only_zero_items, ProcessedSingleZero
+from src.find_only_zero_items import find_only_zero_items
 from src.matrix_dilution import matrix_dilution
 from src.paired_transformation import paired_transformation
 from src.transferring_element_to_transportation_plan import TransferringElementToPlan
