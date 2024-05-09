@@ -1,5 +1,3 @@
-from src.delete_line_from_matrix import delete_column_from_matrix, delete_row_from_matrix
-
 FIRST_INDEX = 0
 SECOND_INDEX = 1
 
@@ -21,6 +19,8 @@ class TransferringElementToPlan:
         self.item_cors = item_cors
         self.storages_item = storages[item_cors[FIRST_INDEX]]
         self.shops_item = shops[item_cors[SECOND_INDEX]]
+        self.ignoring_rows = []
+        self.ignoring_columns = []
 
     def set_new_item_cors(self, item_cors: list[int]):
         self.item_cors = item_cors
@@ -41,26 +41,21 @@ class TransferringElementToPlan:
     def transfer_storage_to_plan(self):
         self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.storages_item
         self.shops[self.item_cors[SECOND_INDEX]] -= self.storages_item
-        del self.storages[self.item_cors[FIRST_INDEX]]
+        #del self.storages[self.item_cors[FIRST_INDEX]]
 
-        self.sparse_matrix = delete_row_from_matrix(self.sparse_matrix, self.item_cors[FIRST_INDEX])
-        self.cost_matrix = delete_row_from_matrix(self.cost_matrix, self.item_cors[FIRST_INDEX])
+        self.ignoring_rows.append(self.item_cors[FIRST_INDEX])
 
     def transfer_shop_and_storage_to_plan(self):
         self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.storages_item
-        del self.storages[self.item_cors[FIRST_INDEX]]
-        del self.shops[self.item_cors[SECOND_INDEX]]
+        #del self.storages[self.item_cors[FIRST_INDEX]]
+        #del self.shops[self.item_cors[SECOND_INDEX]]
 
-        self.sparse_matrix = delete_column_from_matrix(self.sparse_matrix, self.item_cors[FIRST_INDEX])
-        self.sparse_matrix = delete_row_from_matrix(self.sparse_matrix, self.item_cors[SECOND_INDEX])
-
-        self.cost_matrix = delete_column_from_matrix(self.cost_matrix, self.item_cors[FIRST_INDEX])
-        self.cost_matrix = delete_row_from_matrix(self.cost_matrix, self.item_cors[SECOND_INDEX])
+        self.ignoring_columns.append(self.item_cors[SECOND_INDEX])
+        self.ignoring_rows.append(self.item_cors[FIRST_INDEX])
 
     def transfer_shop_to_plan(self):
         self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.shops_item
-        del self.shops[self.item_cors[SECOND_INDEX]]
+        #del self.shops[self.item_cors[SECOND_INDEX]]
         self.storages[self.item_cors[FIRST_INDEX]] -= self.shops_item
 
-        self.sparse_matrix = delete_column_from_matrix(self.sparse_matrix, self.item_cors[SECOND_INDEX])
-        self.cost_matrix = delete_column_from_matrix(self.cost_matrix, self.item_cors[SECOND_INDEX])
+        self.ignoring_columns.append(self.item_cors[SECOND_INDEX])

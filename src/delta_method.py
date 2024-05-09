@@ -31,7 +31,10 @@ def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[
     plan.calculate()
 
     while zero_cors and plan.storages and plan.shops and plan.sparse_matrix:
-        zero_cors = find_only_zero_items(plan.sparse_matrix, plan.cost_matrix)
+        zero_cors = find_only_zero_items(plan.sparse_matrix, plan.cost_matrix, plan.ignoring_rows, plan.ignoring_columns)
+        if not zero_cors:
+            break
+
         plan.set_new_item_cors(zero_cors)
         plan.calculate()
 

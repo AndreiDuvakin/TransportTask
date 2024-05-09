@@ -47,7 +47,7 @@ class MainWin(QMainWindow):
                 label = QLabel()
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
                 label.setText(str(spin_box.value()))
-                self.tableWidget_2.setCellWidget(row, self.suppliers_counter.value() + 1, label)
+                self.tableWidget_2.setCellWidget(row, self.shop_counter.value(), label)
         return storages
 
     def extract_shops(self):
@@ -69,15 +69,16 @@ class MainWin(QMainWindow):
         self.calculate()
 
     def calculate(self):
-        try:
-            self.worker = ThreadDeltaCalculate(self.cost_matrix, self.storages, self.shops)
-            self.worker.finished.connect(self.output_results)
-            self.worker.start()
-        except RecursionError:
-            QMessageBox.warning(self, 'Решений нет',
-                                'Предоставленный набор данных не имеет решений дельта-методом')
+        self.worker = ThreadDeltaCalculate(self.cost_matrix, self.storages, self.shops)
+        self.worker.finished.connect(self.output_results)
+        self.worker.start()
 
     def output_results(self, calculate_result):
+        if calculate_result is None:
+            QMessageBox.warning(self, 'Решений нет',
+                                'Предоставленный набор данных не имеет решений дельта-методом')
+            return
+
         transportation_plan, result_sum = calculate_result
         label = QLabel()
         label.setText(str(result_sum))
@@ -117,7 +118,7 @@ class MainWin(QMainWindow):
                     spin_box = SpinWidget()
                     spin_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
                     spin_box.set_value(random.randint(1, 30))
-                    spin_box.set_value(MATRIX[row][column])
+                    # spin_box.set_value(MATRIX[row][column])
                     self.tableWidget.setCellWidget(row, column, spin_box)
                 elif row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1:
                     label = QLabel(self)

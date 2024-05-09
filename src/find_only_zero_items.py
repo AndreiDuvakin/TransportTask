@@ -1,13 +1,22 @@
-def find_only_zero_items(sparse_matrix: list[list[int]], cost_matrix: list[list[int]]) -> list[int]:
+from src.replace_items_by_index import replace_item_by_index
+
+
+def find_only_zero_items(
+        sparse_matrix: list[list[int]],
+        cost_matrix: list[list[int]],
+        ignoring_rows: list[int] = (),
+        ignoring_columns: list[int] = ()
+) -> list[int]:
     zero_items_cors = []
 
     for row_index in range(len(sparse_matrix)):
-        if sparse_matrix[row_index].count(0) == 1:
+        checking_row = replace_item_by_index(sparse_matrix[row_index], ignoring_columns)
+        if checking_row.count(0) == 1 and row_index not in ignoring_rows:
             zero_items_cors.append([row_index, sparse_matrix[row_index].index(0)])
 
     for column_index in range(len(sparse_matrix[0])):
-        column = [item[column_index] for item in sparse_matrix]
-        if column.count(0) == 1:
+        column = replace_item_by_index([item[column_index] for item in sparse_matrix], ignoring_rows)
+        if column.count(0) == 1 and column_index not in ignoring_columns:
             zero_items_cors.append([column.index(0), column_index])
 
     if not zero_items_cors:
