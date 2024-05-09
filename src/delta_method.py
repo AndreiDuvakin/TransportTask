@@ -12,6 +12,7 @@ def delta_method(cost_matrix: list[list[int]], storages: list[int], shops: list[
     zero_cors = find_only_zero_items(sparse_matrix, cost_matrix)
 
     while not zero_cors:
+        sparse_matrix = matrix_dilution(cost_matrix)
         zero_cors = find_only_zero_items(sparse_matrix, cost_matrix)
 
     sparse_matrix = paired_transformation(zero_cors, sparse_matrix, cost_matrix, storages, shops)
