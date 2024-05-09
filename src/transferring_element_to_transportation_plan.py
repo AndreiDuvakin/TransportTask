@@ -1,5 +1,4 @@
-FIRST_INDEX = 0
-SECOND_INDEX = 1
+from src.constants import FIRST_INDEX, SECOND_INDEX
 
 
 class TransferringElementToPlan:

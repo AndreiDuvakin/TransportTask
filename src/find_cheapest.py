@@ -1,7 +1,5 @@
+from src.constants import IMPOSSIBLE_CORS, IMPOSSIBLE_VALUE
 from src.replace_items_by_index import replace_item_by_index
-
-IMPOSSIBLE_VALUE = 200
-IMPOSSIBLE_CORS = [-1, -1]
 
 
 def find_cheapest(matrix: list[list[int]], ignoring_rows: list[int] = (),

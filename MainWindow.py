@@ -118,7 +118,7 @@ class MainWin(QMainWindow):
                     spin_box = SpinWidget()
                     spin_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
                     spin_box.set_value(random.randint(1, 30))
-                    # spin_box.set_value(MATRIX[row][column])
+                    spin_box.set_value(MATRIX[row][column])
                     self.tableWidget.setCellWidget(row, column, spin_box)
                 elif row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1:
                     label = QLabel(self)

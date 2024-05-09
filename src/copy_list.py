@@ -1,6 +1,3 @@
-from copy import deepcopy
-
-
 def copy_int_vector(vector: list[int]) -> list[int]:
     return [item for item in vector]
 
