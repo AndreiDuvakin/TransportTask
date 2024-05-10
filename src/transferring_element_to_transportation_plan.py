@@ -40,21 +40,17 @@ class TransferringElementToPlan:
     def transfer_storage_to_plan(self):
         self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.storages_item
         self.shops[self.item_cors[SECOND_INDEX]] -= self.storages_item
-        #del self.storages[self.item_cors[FIRST_INDEX]]
 
         self.ignoring_rows.append(self.item_cors[FIRST_INDEX])
 
     def transfer_shop_and_storage_to_plan(self):
         self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.storages_item
-        #del self.storages[self.item_cors[FIRST_INDEX]]
-        #del self.shops[self.item_cors[SECOND_INDEX]]
 
         self.ignoring_columns.append(self.item_cors[SECOND_INDEX])
         self.ignoring_rows.append(self.item_cors[FIRST_INDEX])
 
     def transfer_shop_to_plan(self):
         self.transportation_plan[self.item_cors[FIRST_INDEX]][self.item_cors[SECOND_INDEX]] = self.shops_item
-        #del self.shops[self.item_cors[SECOND_INDEX]]
         self.storages[self.item_cors[FIRST_INDEX]] -= self.shops_item
 
         self.ignoring_columns.append(self.item_cors[SECOND_INDEX])
