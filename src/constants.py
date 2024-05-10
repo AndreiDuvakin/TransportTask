@@ -19,6 +19,11 @@ QWINDOW_STYLE_DARK = """
                 font: 1000 14pt "Ubuntu";
                 color: #dddddd;
                 }
+                QMessageBox {
+                background-color: #060429;
+                font: 1000 14pt "Ubuntu";
+                color: #dddddd;
+                }
 
                 QPushButton {
                 background-color: #060429;
