@@ -23,6 +23,50 @@
    <iconset>
     <normaloff>../img/logo.png</normaloff>../img/logo.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+            background-color: #060429;	
+            font: 1000 14pt &quot;Ubuntu&quot;;
+            color: #eaeaea;
+}
+
+QPushButton {
+            background-color: #060429;	
+            font: 1000 14pt &quot;Ubuntu&quot;;
+            color: #eaeaea;
+			 border: 2px solid #eaeaea;
+			 border-radius: 6px;
+}
+
+QLabel {
+            font: 1000 14pt &quot;Ubuntu&quot;;
+            color: #eaeaea;
+}
+
+&lt;!---
+QSpinBox {
+            color: #060429;
+            font: 14pt &quot;Ubuntu&quot;;
+            background-color: white;
+            border: 2px solid #060429;
+            border-radius: 5px;
+        }
+
+        QPushButton {
+            color: white;
+            font: 14pt &quot;Ubuntu&quot;;
+            background-color: #060429;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
+
+        QTableWidget {
+            background-color: #060429;
+            color: white;
+            font: 14pt &quot;Ubuntu&quot;;
+        }
+--!&gt;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="2">
