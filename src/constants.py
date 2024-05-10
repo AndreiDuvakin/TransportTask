@@ -5,6 +5,7 @@ IMPOSSIBLE_VALUE = 200
 NEGATIVE_IMPOSSIBLE_VALUE = -100
 IMPOSSIBLE_CORS = [-1, -1]
 
+QLABEL_STYLE = """"""
 QLABEL_STYLE_DARK = """
                 QLabel {
                     background-color: #060429;	
@@ -12,7 +13,6 @@ QLABEL_STYLE_DARK = """
                     color: #dddddd;
                 }
                 """
-QLABEL_STYLE = """"""
 QWINDOW_STYLE_DARK = """
                 QMainWindow {
                 background-color: #060429;
