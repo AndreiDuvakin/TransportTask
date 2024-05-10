@@ -2,9 +2,10 @@ import random
 
 from PyQt5 import uic
 from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtWidgets import QMainWindow, QSpinBox, QLabel, QSizePolicy, QMessageBox, QDesktopWidget
+from PyQt5.QtWidgets import QMainWindow, QSpinBox, QLabel, QSizePolicy, QMessageBox, QDesktopWidget, QTableWidget
 
 from spin_widget import SpinWidget
+from src.constants import FIRST_INDEX, QLABEL_STYLE_DARK, QLABEL_STYLE, QWINDOW_STYLE_DARK
 from thread_delta_calculate import ThreadDeltaCalculate
 
 MATRIX = [
@@ -22,12 +23,19 @@ class MainWin(QMainWindow):
         self.shops = None
         self.storages = None
         self.cost_matrix = None
+        self.darkTheme = False
         uic.loadUi('ui/MainWin.ui', self)
         self.shop_counter.valueChanged.connect(self.update_table)
         self.suppliers_counter.valueChanged.connect(self.update_table)
         self.pushButton.clicked.connect(self.extract_data)
+        self.pushButton_2.clicked.connect(self.switch_theme)
         self.center_on_screen()
         QTimer.singleShot(3400, self.update_table)
+
+    def switch_theme(self):
+        self.darkTheme = not self.darkTheme
+        self.setStyleSheet(QWINDOW_STYLE_DARK if self.darkTheme else '')
+        self.update_table()
 
     def center_on_screen(self):
         screen = QDesktopWidget().availableGeometry()
@@ -50,13 +58,7 @@ class MainWin(QMainWindow):
             if type(spin_box) is SpinWidget:
                 storages.append(spin_box.value())
                 label = QLabel()
-                label.setStyleSheet("""
-                QLabel {
-                    background-color: #060429;	
-                    font: 1000 14pt "Ubuntu";
-                    color: #eaeaea;
-                }
-                """)
+                label.setStyleSheet(QLABEL_STYLE if not self.darkTheme else QLABEL_STYLE_DARK)
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
                 label.setText(str(spin_box.value()))
                 self.tableWidget_2.setCellWidget(row, self.shop_counter.value(), label)
@@ -69,13 +71,7 @@ class MainWin(QMainWindow):
             if type(spin_box) is SpinWidget:
                 shops.append(spin_box.value())
                 label = QLabel()
-                label.setStyleSheet("""
-                QLabel {
-                    background-color: #060429;	
-                    font: 1000 14pt "Ubuntu";
-                    color: #eaeaea;
-                }
-                """)
+                label.setStyleSheet(QLABEL_STYLE if not self.darkTheme else QLABEL_STYLE_DARK)
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
                 label.setText(str(spin_box.value()))
                 self.tableWidget_2.setCellWidget(self.suppliers_counter.value(), column, label)
@@ -100,26 +96,14 @@ class MainWin(QMainWindow):
 
         transportation_plan, result_sum = calculate_result
         label = QLabel()
-        label.setStyleSheet("""
-        QLabel {
-            background-color: #060429;	
-            font: 1000 14pt "Ubuntu";
-            color: #eaeaea;
-        }
-        """)
+        label.setStyleSheet(QLABEL_STYLE if not self.darkTheme else QLABEL_STYLE_DARK)
         label.setText(str(result_sum))
         self.tableWidget_2.setCellWidget(self.suppliers_counter.value() + 1, 0, label)
 
         for row_index in range(len(transportation_plan)):
             for column_index in range(len(transportation_plan[row_index])):
                 label = QLabel()
-                label.setStyleSheet("""
-                QLabel {
-                    background-color: #060429;	
-                    font: 1000 14pt "Ubuntu";
-                    color: #eaeaea;
-                }
-                """)
+                label.setStyleSheet(QLABEL_STYLE if not self.darkTheme else QLABEL_STYLE_DARK)
                 value = transportation_plan[row_index][column_index]
                 label.setText(str(value) if value != 0 else '')
                 label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
@@ -145,7 +129,10 @@ class MainWin(QMainWindow):
 
         for row in range(self.tableWidget.rowCount()):
             for column in range(self.tableWidget.columnCount()):
-                if type(self.tableWidget.cellWidget(row, column)) != QSpinBox and not (
+                label = QLabel(self)
+                label.setStyleSheet(QLABEL_STYLE if not self.darkTheme else QLABEL_STYLE_DARK)
+                self.tableWidget_2.setCellWidget(row, column, label)
+                if type(self.tableWidget.cellWidget(row, column)) != SpinWidget and not (
                         row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1
                 ):
                     spin_box = SpinWidget()
@@ -154,15 +141,11 @@ class MainWin(QMainWindow):
                     # spin_box.set_value(MATRIX[row][column])
                     self.tableWidget.setCellWidget(row, column, spin_box)
                 elif row == self.tableWidget.rowCount() - 1 and column == self.tableWidget.columnCount() - 1:
-                    label = QLabel(self)
-                    label.setStyleSheet("""
-                    QLabel {
-                        background-color: #060429;	
-                        font: 1000 14pt "Ubuntu";
-                        color: #eaeaea;
-                    }
-                    """)
                     self.tableWidget.setCellWidget(row, column, label)
+
+        label = QLabel(self)
+        label.setStyleSheet(QLABEL_STYLE if not self.darkTheme else QLABEL_STYLE_DARK)
+        self.tableWidget_2.setCellWidget(self.tableWidget.rowCount(), FIRST_INDEX, label)
 
         self.tableWidget.setHorizontalHeaderLabels(suppliers_headers + ['Запасы'])
         self.tableWidget.setVerticalHeaderLabels(shop_headers + ['Потребности'])

@@ -24,83 +24,11 @@
     <normaloff>../img/logo.png</normaloff>../img/logo.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow {
-            background-color: #060429;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #eaeaea;
-}
-
-QPushButton {
-            background-color: #060429;	
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #eaeaea;
-			 border: 2px solid #eaeaea;
-			 border-radius: 6px;
-}
-
-QLabel {
-            font: 1000 14pt &quot;Ubuntu&quot;;
-            color: #eaeaea;
-}
-
-&lt;!---
-QSpinBox {
-            color: #060429;
-            font: 14pt &quot;Ubuntu&quot;;
-            background-color: white;
-            border: 2px solid #060429;
-            border-radius: 5px;
-        }
-
-        QPushButton {
-            color: white;
-            font: 14pt &quot;Ubuntu&quot;;
-            background-color: #060429;
-            border: 2px solid white;
-            border-radius: 5px;
-        }
-
-        QTableWidget {
-            background-color: #060429;
-            color: white;
-            font: 14pt &quot;Ubuntu&quot;;
-        }
---!&gt;</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="2">
-     <spacer name="horizontalSpacer_5">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="3" column="0" colspan="3">
-     <widget class="QWidget" name="widget_2" native="true">
-      <property name="font">
-       <font>
-        <family>Ubuntu</family>
-        <pointsize>14</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QTableWidget" name="tableWidget_2"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1">
+    <item row="2" column="2">
      <widget class="QPushButton" name="pushButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -119,33 +47,7 @@ QSpinBox {
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <spacer name="horizontalSpacer_6">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="0">
-     <spacer name="horizontalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="0" colspan="3">
+    <item row="1" column="1" colspan="3">
      <widget class="QWidget" name="widget" native="true">
       <property name="font">
        <font>
@@ -172,6 +74,9 @@ QSpinBox {
        </item>
        <item row="2" column="2">
         <widget class="QSpinBox" name="suppliers_counter">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="minimum">
           <number>2</number>
          </property>
@@ -241,6 +146,106 @@ QSpinBox {
        </item>
       </layout>
      </widget>
+    </item>
+    <item row="2" column="3">
+     <spacer name="horizontalSpacer_5">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="1" colspan="3">
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="font">
+       <font>
+        <family>Ubuntu</family>
+        <pointsize>14</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QTableWidget" name="tableWidget_2">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <spacer name="horizontalSpacer_6">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="1">
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Переключить тему</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <spacer name="horizontalSpacer_7">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="3">
+     <spacer name="horizontalSpacer_8">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>
