@@ -4,7 +4,7 @@
 
 ## About the project
 
-This project was developed as part of the internship program in the specialty **09.02.07 Information Systems and Programming** (PM.02 Implementation of Software Module Integration). The program solves a classic transportation problem using the **delta method** (a combination of the northwest angle method and the potential method).
+This project was developed as part of the internship program in the specialty 09.02.07 Information Systems and Programming (PM.02 Implementation of Software Module Integration). The program solves a classic transportation problem using the delta method (a combination of the northwest angle method and the potential method).
 The project is designed to optimize the transportation plan from suppliers (warehouses) to consumers (stores) with minimal total costs.
 
 ## Purpose of creation
